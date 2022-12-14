@@ -53,26 +53,29 @@ class BinaryTreeNode {
 
   nextLarger(lowerBound) {
 
-    // node value is lower + 1
+    //base case 
+    if(this.left === null && this.right === null) {
+      return this.val > lowerBound
+              ? this.val
+              : null;
+    }
+
+    //Special case
     if (this.val === lowerBound + 1) return this.val;
 
-    // node has no children
-    if (this.left === null && this.right === null) return this.val;
-
-    let leftBest;
-    let rightBest;
-
-    if (this.left) {
-      leftBest = this.left.nextLarger();
+    let leftResult = null;
+    let rightResult = null;
+    //recursive case
+    if(this.left){
+      leftResult = this.left.nextLarger(lowerBound)
     }
-    if (this.right) {
-      rightBest = this.right.nextLarger();
-
+    if(this.right){
+      rightResult = this.right.nextLarger(lowerBound)
     }
 
-    // let values = ([leftBest, rightBest].filter(b => b > lowerBound));
-    return Math.min;
-
+    if(leftResult && rightResult) return Math.min(leftResult, rightResult);
+    else if(rightResult) return rightResult;
+    return leftResult;
 
   }
 }
@@ -110,7 +113,7 @@ class BinaryTree {
   nextLarger(lowerBound) {
 
     if (this.root === null) return null;
-    return this.root.nextLarger();
+    return this.root.nextLarger(lowerBound);
 
 
   }
